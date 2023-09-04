@@ -54,11 +54,11 @@
         }
 
         .correct-letter {
-            color: green;
+            color: yellow;
         }
 
         .correct-position {
-            color: red;
+            color: green;
         }
     </style>
 </head>
@@ -78,9 +78,17 @@
     <script>
         const targetWord = "BLUES";
         let attempts = 0;
+        let remainingGuesses = 6;
 
         function checkWord() {
             attempts++;
+
+            if (attempts > 6) {
+                document.getElementById("feedback").innerHTML = `Out of guesses! The word was "${targetWord}".`;
+                document.getElementById("feedback").style.color = "red";
+                document.getElementById("feedback").style.fontWeight = "bold";
+                return;
+            }
 
             const letter1 = document.getElementById("letter1").value.toUpperCase();
             const letter2 = document.getElementById("letter2").value.toUpperCase();
@@ -92,21 +100,27 @@
 
             if (word === targetWord) {
                 document.getElementById("feedback").innerHTML = `Congratulations! You guessed the word "${targetWord}" in ${attempts} attempts.`;
+                document.getElementById("feedback").style.color = "green";
+                document.getElementById("feedback").style.fontWeight = "bold";
             } else {
                 const feedback = generateFeedback(word);
                 document.getElementById("feedback").innerHTML = feedback;
+                document.getElementById("feedback").style.color = "#333";
+                document.getElementById("feedback").style.fontWeight = "normal";
             }
         }
 
         function generateFeedback(word) {
-            let feedback = "";
+            let feedback = "Green Order: ";
             for (let i = 0; i < word.length; i++) {
                 if (word[i] === targetWord[i]) {
                     feedback += `<span class="correct-position">${word[i]}</span>`;
-                } else if (targetWord.includes(word[i])) {
+                }
+            }
+            feedback += "<br>Yellow Letters: ";
+            for (let i = 0; i < word.length; i++) {
+                if (targetWord.includes(word[i]) && word[i] !== targetWord[i]) {
                     feedback += `<span class="correct-letter">${word[i]}</span>`;
-                } else {
-                    feedback += word[i];
                 }
             }
             return feedback;
