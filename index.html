@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Team Wordle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .wordle-container {
+            margin: 20px auto;
+            max-width: 400px;
+            text-transform: uppercase;
+        }
+
+        .wordle-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 24px;
+            margin: 0 5px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .wordle-input:focus {
+            border-color: #007BFF;
+        }
+
+        .submit-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .feedback {
+            margin-top: 20px;
+        }
+
+        .correct-letter {
+            color: green;
+        }
+
+        .correct-position {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sports Team Wordle</h1>
+    <div class="wordle-container">
+        <div>
+            <input class="wordle-input" type="text" maxlength="1" id="letter1">
+            <input class="wordle-input" type="text" maxlength="1" id="letter2">
+            <input class="wordle-input" type="text" maxlength="1" id="letter3">
+            <input class="wordle-input" type="text" maxlength="1" id="letter4">
+            <input class="wordle-input" type="text" maxlength="1" id="letter5">
+        </div>
+        <button class="submit-button" onclick="checkWord()">Submit</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <script>
+        const targetWord = "BLUES";
+        let attempts = 0;
+
+        function checkWord() {
+            attempts++;
+
+            const letter1 = document.getElementById("letter1").value.toUpperCase();
+            const letter2 = document.getElementById("letter2").value.toUpperCase();
+            const letter3 = document.getElementById("letter3").value.toUpperCase();
+            const letter4 = document.getElementById("letter4").value.toUpperCase();
+            const letter5 = document.getElementById("letter5").value.toUpperCase();
+
+            const word = letter1 + letter2 + letter3 + letter4 + letter5;
+
+            if (word === targetWord) {
+                document.getElementById("feedback").innerHTML = `Congratulations! You guessed the word "${targetWord}" in ${attempts} attempts.`;
+            } else {
+                const feedback = generateFeedback(word);
+                document.getElementById("feedback").innerHTML = feedback;
+            }
+        }
+
+        function generateFeedback(word) {
+            let feedback = "";
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] === targetWord[i]) {
+                    feedback += `<span class="correct-position">${word[i]}</span>`;
+                } else if (targetWord.includes(word[i])) {
+                    feedback += `<span class="correct-letter">${word[i]}</span>`;
+                } else {
+                    feedback += word[i];
+                }
+            }
+            return feedback;
+        }
+    </script>
+</body>
+</html>
