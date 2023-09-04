@@ -70,13 +70,12 @@
             <input class="wordle-input" type="text" maxlength="1" id="letter2">
             <input class="wordle-input" type="text" maxlength="1" id="letter3">
             <input class="wordle-input" type="text" maxlength="1" id="letter4">
-            <input class="wordle-input" type="text" maxlength="1" id="letter5">
         </div>
         <button class="submit-button" onclick="checkWord()">Submit</button>
     </div>
     <div class="feedback" id="feedback"></div>
     <script>
-        const targetWord = "Magic";
+        const targetWord = "MAGIC";
         let attempts = 0;
         let remainingGuesses = 6;
 
@@ -94,9 +93,8 @@
             const letter2 = document.getElementById("letter2").value.toUpperCase();
             const letter3 = document.getElementById("letter3").value.toUpperCase();
             const letter4 = document.getElementById("letter4").value.toUpperCase();
-            const letter5 = document.getElementById("letter5").value.toUpperCase();
 
-            const word = letter1 + letter2 + letter3 + letter4 + letter5;
+            const word = letter1 + letter2 + letter3 + letter4;
 
             if (word === targetWord) {
                 document.getElementById("feedback").innerHTML = `Congratulations! You guessed the word "${targetWord}" in ${attempts} attempts.`;
